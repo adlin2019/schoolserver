@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.school.mapper.StudentMapper">
+
+    <resultMap id="userResultMap" type="Student">
+        <result property="account" column="account" />
+        <result property="password" column="password" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+
+    <insert id="addStudent" parameterType="Student">
+        INSERT INTO schooldb.student (account, password, create_time)
+            VALUES (#{account}, #{password}, #{createTime});
+    </insert>
+
+    <select id="selectStudentByAccount" resultMap="userResultMap">
+        SELECT * FROM schooldb.student
+            WHERE account = #{account};
+    </select>
+
+
+
+</mapper>

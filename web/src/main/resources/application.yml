@@ -1,0 +1,77 @@
+server:
+  # 配置端口号
+  port:8080
+
+spring:
+  # 数据源配置
+  datasource:
+
+    # 数据源类型
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    # mysql驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # druid配置
+    druid:
+
+      # 数据库url
+      url: jdbc:mysql://localhost:3306/schooldb?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+
+      # mysql数据库用户名
+      username: root
+
+      # mysql数据库密码
+      password: admin
+
+      # 配置连接池初始化大小、最小、最大
+      initial-size: 5
+      min-idle: 10
+      max-active: 20
+
+      # 配置获取连接等待超时的时间
+      max-wait: 6000
+
+  # redis配置
+  redis:
+
+    # redis密码
+    password:
+
+    # 链接超时时间
+    timeout: 3000
+
+
+# mybatis配置
+mybatis:
+
+  mapper-locations: classpath:mapper/*.xml
+
+  #起别名的包
+  type-aliases-package: com.school.pojo
+
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+
+
+# 日志配置
+logging:
+  level:
+    com.hnu.web.mapper: debug
+
+
+
+
+
+
+
+
+
+

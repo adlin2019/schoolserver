@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.school</groupId>
+	<artifactId>schoolserver</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<modules>
+		<module>web</module>
+	</modules>
+
+
+	<name>schoolserver</name>
+	<description>server for school server</description>
+
+
+	<!-- 版本相关配置-->
+	<properties>
+		<java.version>1.8</java.version>
+		<schoolserver.version>0.0.1-SNAPSHOT</schoolserver.version>
+		<spring-boot.version>2.2.13.RELEASE</spring-boot.version>
+		<durid.version>1.2.6</durid.version>
+		<mybatis-spring-boot.version>2.1.4</mybatis-spring-boot.version>
+		<spring-redis.version>2.5.2</spring-redis.version>
+		<jjwt.version>0.9.1</jjwt.version>
+		<kaptcha.version>2.3.2</kaptcha.version>
+		<commons.collections.version>3.2.2</commons.collections.version>
+		<commons.io.version>2.5</commons.io.version>
+		<commons.fileupload.version>1.3.3</commons.fileupload.version>
+	</properties>
+
+	<!-- 依赖声明-->
+	<dependencyManagement>
+
+		<dependencies>
+
+			<!-- Springboot相关依赖-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+
+			<!-- druid数据库连接池-->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${durid.version}</version>
+			</dependency>
+
+			<!-- Springboot集成mybatis框架-->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybatis-spring-boot.version}</version>
+			</dependency>
+
+			<!-- Springboot整合redis框架 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-redis</artifactId>
+				<version>${spring-boot.version}</version>
+			</dependency>
+
+
+			<!-- Token生成与解析-->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${jjwt.version}</version>
+			</dependency>
+
+			<!-- 验证码生成工具 -->
+			<dependency>
+				<groupId>com.github.penggle</groupId>
+				<artifactId>kaptcha</artifactId>
+				<version>${kaptcha.version}</version>
+			</dependency>
+
+			<!-- Collection工具类 -->
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>${commons.collections.version}</version>
+			</dependency>
+
+			<!-- io常用工具类 -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+
+			<!-- 文件上传工具类 -->
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons.fileupload.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.school</groupId>
+				<artifactId>web</artifactId>
+				<version>${schoolserver.version}</version>
+			</dependency>
+		</dependencies>
+
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
