@@ -94,6 +94,9 @@ public class User {
         this.updateTime = updateTime;
     }
 
+    public User() {
+    }
+
     public int getUserType() {
         return userType;
     }

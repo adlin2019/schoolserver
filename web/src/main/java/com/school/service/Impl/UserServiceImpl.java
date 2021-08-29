@@ -3,6 +3,7 @@ package com.school.service.Impl;
 import com.school.mapper.UserMapper;
 import com.school.pojo.User;
 import com.school.service.UserService;
+import com.school.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
+
+        //对user的密码进行加密处理
+        String encodedPassword = SecurityUtils.encryptPassword(user.getPassword());
+        user.setPassword(encodedPassword);
+
         return userMapper.addUser(user);
     }
 }
