@@ -10,27 +10,16 @@ import com.school.pojo.Student;
  */
 public interface LoginService {
 
-    /**
-     * 添加学生信息
-     * @param student
-     * @return
-     */
-    int addStudent(Student student);
 
 
     /**
-     * 对登录实体进行校验
+     * 对登录实体进行校验，并返回token
      * @param loginBody
-     * @return
+     * @return token
      */
-    int verify(LoginBody loginBody);
+    String verify(LoginBody loginBody);
 
 
-    /**
-     * 根据登录信息，生成登录对象
-     * @param loginBody
-     * @return
-     */
-    String createToken(LoginBody loginBody);
+
 
 }

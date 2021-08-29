@@ -28,7 +28,11 @@ public class LoginController {
     private TokenService tokenService;
 
 
-
+    /**
+     * 实现登录校验，并返回token
+     * @param loginBody
+     * @return
+     */
     @PostMapping("/submit")
     public ResInfo submit(@RequestBody LoginBody loginBody) {
 
@@ -36,18 +40,9 @@ public class LoginController {
         // 创建返回实体
         ResInfo res = ResInfo.success();
 
-        // 对登录实体进行校验
-        int result = loginService.verify(loginBody);
+        // 登录校验并返回token
+        String token = loginService.verify(loginBody);
 
-        // 根据返回的result判断校验结果
-        // result为0，说明校验失败，直接返回结果
-        if (result == 0) {
-            res.put("result", "登录失败");
-            return res;
-        }
-
-        // 校验通过则创建与用户对应的token
-        String token = loginService.createToken(loginBody);
         res.put(Constants.TOKEN, token);
 
         return res;

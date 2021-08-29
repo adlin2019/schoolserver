@@ -3,6 +3,8 @@ package com.school.service.Impl;
 import com.school.component.RedisService;
 import com.school.component.TokenService;
 import com.school.constant.Constants;
+import com.school.exception.KaptchaException;
+import com.school.exception.ValidateException;
 import com.school.mapper.UserMapper;
 import com.school.pojo.LoginBody;
 import com.school.pojo.LoginUser;
@@ -17,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.xml.bind.ValidationException;
 import java.util.Date;
 
 /**
@@ -39,13 +42,10 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private AuthenticationManager authenticationManager;
 
-    @Override
-    public int addStudent(Student student) {
-        return 0;
-    }
+
 
     @Override
-    public int verify(LoginBody loginBody) {
+    public String verify(LoginBody loginBody) {
 
         // 1. 得到登录信息
         String account = loginBody.getAccount();
@@ -61,15 +61,13 @@ public class LoginServiceImpl implements LoginService {
 
         // 先判断是否有对应的验证码
         if (capText == null) {
-            // 0表示校验失败
-            return 0;
+            throw new KaptchaException("传入验证码为空！");
         }
 
         // 判断用户传来的验证码是否正确
         if (!code.equalsIgnoreCase(capText)) {
-            return 0;
+            throw new KaptchaException("验证码输入错误！");
         }
-
 
         // 3.对用户的账号密码进行校验
         Authentication authentication = null;
@@ -77,28 +75,17 @@ public class LoginServiceImpl implements LoginService {
             // 通过authenticationManager接口进行校验
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account, password));
         } catch (Exception e) {
-            System.out.println("认证失败");
-            return 0;
-
+            throw new ValidateException("帐号或者密码输入错误");
         }
 
-        // 认证成功
-        return 1;
+        // 4.返回token
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
 
-
-
-
+        return createToken(loginUser);
     }
 
-    @Override
-    public String createToken(LoginBody loginBody) {
-
-        //1.构造出LoginUser实体
-        LoginUser loginUser = new LoginUser();
-        User user = new User(loginBody.getAccount(), loginBody.getPassword(),1);
-        loginUser.setUser(user);
-
-        //2.创建token
+    public String createToken(LoginUser loginUser) {
+        //创建token
         return tokenService.createToken(loginUser);
 
 
