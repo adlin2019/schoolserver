@@ -17,6 +17,12 @@ public class LoginUser implements UserDetails {
 
 
     /**
+     * 与用户对应的token
+     */
+    private String token;
+
+
+    /**
      * 用户唯一标识
      */
     private String uuid;
@@ -31,12 +37,15 @@ public class LoginUser implements UserDetails {
      */
     private Long expireTime;
 
+
+
     /**
      * 用户信息
      */
     private User user;
 
     public LoginUser(String token, Long loginTime, Long expireTime, User user) {
+        this.token = token;
         this.uuid = token;
         this.loginTime = loginTime;
         this.expireTime = expireTime;
@@ -80,6 +89,14 @@ public class LoginUser implements UserDetails {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

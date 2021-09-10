@@ -1,4 +1,4 @@
-package com.school.component.Impl;
+package com.school.security;
 
 import com.school.pojo.LoginUser;
 import com.school.pojo.User;

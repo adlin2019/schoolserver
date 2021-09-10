@@ -1,6 +1,8 @@
 package com.school.redis;
 
 
+import com.school.component.RedisService;
+import com.school.constant.Constants;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +13,9 @@ public class RedisDemoApplicationTests {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private RedisService redisService;
 
     @Test
     void contextLoads() {
@@ -33,6 +38,21 @@ public class RedisDemoApplicationTests {
         System.out.println(redisTemplate.opsForSet().members("dataSet"));
 
 
+    }
+
+    /**
+     * 测试如果传入不存在的key，是否会报错！
+     */
+    @Test
+    void getNullObject() {
+        String uuid = "";
+        String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
+        String capText = redisService.getCacheObject(verifyKey);
+        System.out.println(capText);
+
+        /*
+        * 结果证明不会报错，只会得到一个空对象！
+        * */
     }
 
 

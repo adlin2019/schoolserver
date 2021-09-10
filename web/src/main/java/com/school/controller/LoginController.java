@@ -1,7 +1,6 @@
 package com.school.controller;
 
 
-import com.school.component.TokenService;
 import com.school.constant.Constants;
 import com.school.pojo.LoginBody;
 import com.school.pojo.ResInfo;
@@ -38,7 +37,7 @@ public class LoginController {
         ResInfo res = ResInfo.success();
 
         // 登录校验并返回token
-        String token = loginService.verify(loginBody);
+        String token = loginService.verifyAndGetToken(loginBody);
 
         res.put(Constants.TOKEN, token);
 

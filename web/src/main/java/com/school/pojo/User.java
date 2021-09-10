@@ -1,5 +1,6 @@
 package com.school.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  *
  * @author hnuer
  */
-public class User {
+public class User implements Serializable {
 
 
     /**

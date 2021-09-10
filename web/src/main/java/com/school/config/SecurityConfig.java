@@ -1,7 +1,7 @@
 package com.school.config;
 
 
-import com.school.service.UserService;
+import com.school.security.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.annotation.Resource;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * SpringSecurity配置
@@ -26,9 +25,18 @@ import javax.annotation.Resource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+    /**
+     * 自定义用户认证逻辑
+     */
     @Autowired
     @Qualifier("UserDetailsServiceImpl")
     private UserDetailsService userDetailsService;
+
+    /**
+     * token认证过滤器
+     */
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
 
     @Override
@@ -44,12 +52,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf()
                 .disable()
+                // 配置认证逻辑
                 .authorizeRequests()
-                .anyRequest()
-                .permitAll()
+                // 登录页面允许访问
+                .antMatchers("/login/submit","/kaptcha/getCode","/user/add").permitAll()
+                // 其他需要认证后进行访问
+                .anyRequest().authenticated()
                 .and()
-                .logout()
-                .permitAll();
+                .logout().permitAll();
+
+        //配置过滤器链
+        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Override

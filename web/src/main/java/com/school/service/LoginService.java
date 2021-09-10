@@ -1,7 +1,7 @@
 package com.school.service;
 
 import com.school.pojo.LoginBody;
-import com.school.pojo.Student;
+
 
 /**
  * 登录服务相关接口
@@ -17,7 +17,7 @@ public interface LoginService {
      * @param loginBody
      * @return token
      */
-    String verify(LoginBody loginBody);
+    String verifyAndGetToken(LoginBody loginBody);
 
 
 

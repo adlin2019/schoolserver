@@ -1,5 +1,7 @@
 package com.school.utils;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,5 +21,13 @@ public class SecurityUtils {
     public static String encryptPassword(String password) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
+    }
+
+    /**
+     * 获取Authentication
+     */
+    public static Authentication getAuthentication()
+    {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }
