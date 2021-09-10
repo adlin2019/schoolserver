@@ -3,6 +3,7 @@ package com.school.exception;
 import com.school.pojo.ResInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -25,4 +26,5 @@ public class GlobalExceptionHandler {
     public ResInfo validateException(ValidateException e) {
         return ResInfo.error(e.getMessage());
     }
+
 }

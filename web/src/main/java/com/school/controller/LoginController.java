@@ -24,9 +24,6 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private TokenService tokenService;
-
 
     /**
      * 实现登录校验，并返回token

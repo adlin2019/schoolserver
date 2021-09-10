@@ -75,7 +75,7 @@ public class LoginServiceImpl implements LoginService {
             // 通过authenticationManager接口进行校验
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account, password));
         } catch (Exception e) {
-            throw new ValidateException("帐号或者密码输入错误");
+            throw new ValidateException("用户名不存在/密码错误！");
         }
 
         // 4.返回token
@@ -87,11 +87,6 @@ public class LoginServiceImpl implements LoginService {
     public String createToken(LoginUser loginUser) {
         //创建token
         return tokenService.createToken(loginUser);
-
-
-
-
-
 
     }
 }

@@ -60,7 +60,6 @@ public class KaptchaController {
         redisService.setCacheObject(verifyKey,capText,Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
 
         // 4.向客户端响应图片信息
-
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
 
         try {
