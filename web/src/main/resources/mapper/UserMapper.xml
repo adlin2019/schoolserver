@@ -22,6 +22,10 @@
         WHERE account = #{account};
     </select>
 
+    <delete id="deleteUserByAccount">
+        DELETE FROM schooldb.user WHERE schooldb.user.account = #{account};
+    </delete>
+
 
 
 </mapper>

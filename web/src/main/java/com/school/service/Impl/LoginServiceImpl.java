@@ -46,7 +46,7 @@ public class LoginServiceImpl implements LoginService {
         String uuid = loginBody.getUuid();
 
         // 2. 对验证码进行校验校验
-        //verifyKaptcha(code, uuid);
+        verifyKaptcha(code, uuid);
 
         // 3.对用户的账号密码进行校验，并返回LoginUser的信息
         LoginUser loginUser = verifyAccountAndPassword(account, password);

@@ -26,5 +26,13 @@ public interface UserMapper {
     int addUser(User user);
 
 
+    /**
+     * 根据用户名（账号）删除用户信息
+     * @param account 用户账号
+     * @return 删除的行数
+     */
+    int deleteUserByAccount(String account);
+
+
 
 }
