@@ -7,8 +7,11 @@ import com.school.constant.Constants;
 import com.school.pojo.ResInfo;
 import com.school.utils.Base64;
 import com.school.utils.IdUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author hnuer
  */
+@Api(tags = "KaptchaController", description = "验证码相关接口")
 @RestController
 @RequestMapping("/kaptcha")
 public class KaptchaController {
@@ -36,43 +40,36 @@ public class KaptchaController {
 
     /**
      * 生成验证码
+     *
      * @param response
      * @throws Exception
      */
-    @RequestMapping("/getCode")
+    @ApiOperation("获得验证码")
+    @GetMapping("/getCode")
     public ResInfo getCode(HttpServletResponse response) throws Exception {
 
         // 1.创建唯一标识符
-
         String uuid = IdUtils.simpleUUID();
         // 该key作为redis中图片文本的key（唯一标识）
         String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
 
         // 2.生成验证码
-
         // 随机得到验证码文本
         String capText = captchaProducer.createText();
-
         // 生成图像
         BufferedImage image = captchaProducer.createImage(capText);
-
         // 3.将答案存入缓存区，并设置验证码有效时间
-        redisService.setCacheObject(verifyKey,capText,Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
-
+        redisService.setCacheObject(verifyKey, capText, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         // 4.向客户端响应图片信息
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
 
         try {
-
             ImageIO.write(image, "jpg", os);
-
         } catch (Exception e) {
-
             return ResInfo.error(e.getMessage());
         }
 
         ResInfo resInfo = ResInfo.success();
-
         resInfo.put("uuid", uuid);
         resInfo.put("img", Base64.encode(os.toByteArray()));
 
@@ -80,10 +77,6 @@ public class KaptchaController {
 
 
     }
-
-
-
-
 
 
 }

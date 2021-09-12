@@ -27,6 +27,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
+     * 配置访问白名单（临时）
+     */
+    private static final String[] URL_WHITE_LIST = {
+            // swagger相关资源开放
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/v2/**",
+            "/swagger-resources/**",
+            // 登录、注册相关接口
+            "/login/submit", "/user/add",
+            // 验证码接口
+            "/kaptcha/getCode"
+    };
+
+
+    /**
      * 自定义用户认证逻辑
      */
     @Autowired
@@ -59,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll()
                 // 登录页面允许访问
-                .antMatchers("/login/submit","/kaptcha/getCode","/user/add").permitAll()
+                .antMatchers(URL_WHITE_LIST).permitAll()
                 // 其他需要认证后进行访问
                 .anyRequest().authenticated()
                 .and()

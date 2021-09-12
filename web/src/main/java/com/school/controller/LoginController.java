@@ -5,6 +5,8 @@ import com.school.constant.Constants;
 import com.school.pojo.LoginBody;
 import com.school.pojo.ResInfo;
 import com.school.service.LoginService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hnuer
  */
+@Api(tags = "LoginController", description = "登录相关接口")
 @RestController
 @RequestMapping("/login")
 public class LoginController {
@@ -26,19 +29,18 @@ public class LoginController {
 
     /**
      * 实现登录校验，并返回token
+     *
      * @param loginBody
      * @return
      */
+    @ApiOperation("登录表单提交接口")
     @PostMapping("/submit")
     public ResInfo submit(@RequestBody LoginBody loginBody) {
 
-
         // 创建返回实体
         ResInfo res = ResInfo.success();
-
         // 登录校验并返回token
         String token = loginService.verifyAndGetToken(loginBody);
-
         res.put(Constants.TOKEN, token);
 
         return res;
